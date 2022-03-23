@@ -14,12 +14,15 @@ public class App {
 
         // create a lexer that feeds off of input CharStream
         compiladoresLexer lexer = new compiladoresLexer(input);
+        //Devuelve un compilador lexico --> entra un archivo todo en string y sale tipo token
         
         // create a buffer of tokens pulled from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
+        //Devuelve un archivo tipo token
         
         // create a parser that feeds off the tokens buffer
         compiladoresParser parser = new compiladoresParser(tokens);
+        //recibe la secuencia de tokens y nos devuelve un objeto tipo parser
                 
         // create Listener
         // ExpRegBaseListener escucha = new Escucha();
