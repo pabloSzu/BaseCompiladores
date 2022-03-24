@@ -4,6 +4,7 @@
     "antlr4.generation": {
         "mode": "external",
         "language": "Java",
+        //"outputDir":"./",
         //"language": "Python3",
         "listeners": true,
         "visitors": true
