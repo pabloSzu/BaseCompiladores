@@ -1,0 +1,74 @@
+GRAMATICAL=SINTÁCTICO
+
+*Analiss léxico
+
+Verifica que las palabras pertenezcan al lenguaje.
+(Verifica ortografía)
+
+Lo vamos a implementar utilizando expresiones regulares.
+Las expresiones regulares tienen implementación ITERATIVA.
+
+*Analisis sintáctico
+Verifica que la secuencia de tokens sea correcta.
+Estructura gramatical del lenguaje.
+
+Lo vamos a implementar utilizando reglas gramaticales.
+Las reglas sitácticas tienen implementación RECURSIVA.
+
+Se pueden realizar de forma:
+-Descendente: Top-Down parsing -> de la raiz a las hojas
+-Ascendente: Bottom-Up parsing -> de las hojas a la raiz
+
+Aánlisis sitáctico descendente:
+In: (())()
+
+Regla s : (s) s
+        |
+        ;
+
+$ s             ( ( ) ) ( ) $ derivar
+$ s ) s (       ( ( ) ) ( ) $ match
+$ s ) s           ( ) ) ( ) $ derivar
+$ s ) s ) s (     ( ) ) ( ) $ match
+$ s ) s ) s         ) ) ( ) $ derivar
+$ s ) s )           ) ) ( ) $ match
+$ s ) s               ) ( ) $ derivar
+$ s )                 ) ( ) $ match
+$ s                     ( ) $ derivar
+$ s ) s (               ( ) $ match
+$ s ) s                   ) $ derivar
+$ s ) s ) s (             ) $ match
+$ s ) s ) s               $ OK
+
+
+
+In: (()
+
+Regla s : (s) s
+        |
+        ;
+        
+$ s                (() $ derivar
+$ s ) s (          (() $ match
+$ s ) s            () $ derivar
+$ s ) s ) s (      () $ match       
+$ s ) s ) s         ) $ derivar 
+$ s ) s )           ) $ match 
+$ s ) s               $ derivar 
+$ s )                 $ ERROR 
+
+
+In: ())
+
+Regla s : (s) s
+        |
+        ;
+        
+$ s                ()( $ derivar
+$ s ) s (          ()( $ match
+$ s ) s             ) $ derivar
+$ s ) s ) s (       ) $ match       
+$ s ) s ) s         ( $ derivar 
+$ s ) s )           ( $ match 
+$ s ) s               $ derivar 
+$ s )                 $ ERROR 
