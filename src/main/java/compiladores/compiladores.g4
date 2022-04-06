@@ -18,6 +18,10 @@ NUMERO : DIGITO+ ;
 
 PA: '(';
 PC: ')';
+LA: '{';
+LC: '}';
+CA: '[';
+CC: ']';
 
 SUMA: '+';
 INT : 'int';
@@ -29,8 +33,16 @@ OTRO : . ;
 
 
 //si: simbolo incial-> le indicamos con "que" regla gramatical comenzar. Sería como el nodo inicial
-si : s EOF ;
+si : a EOF ;
 
+
+a : LA a b LC a
+  |
+  ;
+
+b : CA b s CC b
+  |
+  ;
 
 s : PA s PC s
   |
