@@ -1,9 +1,11 @@
 int a = 3;
-while (x > y) { x = y;
-y = 3 };
+while (x > y) { 
+int d = 3;  
+y = 3; }
 x = 2;
 x / y;
-if (x < y){ y = 3;
+ifa (x < y){ y = 3;
 x / 5;
 int a = 3;
+a=9;
  }
