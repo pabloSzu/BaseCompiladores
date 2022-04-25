@@ -24,11 +24,6 @@ fragment ASTERISCO : '*';
 fragment DIVISION : '/';
 
 //ASIGNACIONES
-MASIGUAL : '+=';
-MENOSIGUAL : '-=';
-PORIGUAL : '*=';
-BARRAIGUAL : '/=';
-MODULOIGUAL : '%=';
 IGUAL : '=';
 
 //SKIPEAMOS: espacios y saltos de línea
