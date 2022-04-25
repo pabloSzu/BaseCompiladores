@@ -4,23 +4,40 @@ grammar compiladores;
 package compiladores;
 }
 
-fragment LETRA : [A-Za-z] ;
-fragment DIGITO: [0-9];
-ENTERO : DIGITO+ ;
-
 fragment INT: 'int' ;
 fragment DOUBLE: 'double' ;
 fragment WHILE: 'while';
-fragment IF: 'ifa';
+fragment IF: 'if';
 
-fragment EQ : '=';
-fragment OP : ('+'|'-'|'*'|'/');
-fragment COMP : ('=='|'>'|'<'|);
-fragment ESP: ' ';
+//CIERRES y APERTURAS
+fragment PA : '(' ; 
+fragment PC : ')' ; 
+fragment CA : '[' ; 
+fragment CC : ']' ; 
+fragment LA : '{' ; 
+fragment LC : '}' ; 
 
-OTRO : . ->skip;
+//OPERACIONES 
+fragment MAS : '+';
+fragment MENOS : '-';
+fragment ASTERISCO : '*';
+fragment DIVISION : '/';
 
+//ASIGNACIONES
+MASIGUAL : '+=';
+MENOSIGUAL : '-=';
+PORIGUAL : '*=';
+BARRAIGUAL : '/=';
+MODULOIGUAL : '%=';
+IGUAL : '=';
+
+//SKIPEAMOS: espacios y saltos de línea
+WS : [\t\r\n ] -> skip; 
+
+
+/* 
 INSTRUCCION : ( WHILEE | IFE );
+
 
 WHILEE : WHILE ESP* '(' ESP* (LETRA|ENTERO) ESP* COMP ESP* (LETRA|ENTERO) ESP* ')' ESP* '{' ESP* INSTRUCCION+ ESP* '}';
 
@@ -38,4 +55,4 @@ s :
     | ASIGNACIONES { System.out.println( "Asignación-> " + $ASIGNACIONES.getText()); } s
     | OPERACION { System.out.println( "Operacion-> " + $OPERACION.getText()); } s
     | EOF
-    ;
+    ;*/
