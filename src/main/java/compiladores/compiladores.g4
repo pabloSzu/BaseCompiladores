@@ -4,10 +4,11 @@ grammar compiladores;
 package compiladores;
 }
 
-fragment INT: 'int' ;
-fragment DOUBLE: 'double' ;
-fragment WHILE: 'while';
-fragment IF: 'if';
+//TIPOS DE DATOS
+fragment INT : 'int';
+fragment DOUBLE : 'double';
+fragment CHAR : 'char';
+fragment VOID : 'void';
 
 //CIERRES y APERTURAS
 fragment PA : '(' ; 
@@ -24,11 +25,15 @@ fragment ASTERISCO : '*';
 fragment DIVISION : '/';
 
 //ASIGNACIONES
-IGUAL : '=';
+fragment IGUAL : '=';
+
+//CICLOS Y CONDICIONALES
+fragment WHILE : 'while';
+fragment IF : 'if';
+fragment FOR : 'for';
 
 //SKIPEAMOS: espacios y saltos de línea
 WS : [\t\r\n ] -> skip; 
-
 
 /* 
 INSTRUCCION : ( WHILEE | IFE );
