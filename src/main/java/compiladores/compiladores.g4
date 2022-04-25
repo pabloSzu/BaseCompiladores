@@ -4,6 +4,8 @@ grammar compiladores;
 package compiladores;
 }
 
+
+
 //TIPOS DE DATOS
 fragment INT : 'int';
 fragment DOUBLE : 'double';
@@ -21,8 +23,9 @@ fragment LC : '}' ;
 //OPERACIONES 
 fragment MAS : '+';
 fragment MENOS : '-';
-fragment ASTERISCO : '*';
+fragment POR : '*';
 fragment DIVISION : '/';
+fragment MOD  : '%' ;  
 
 //ASIGNACIONES
 fragment IGUAL : '=';
@@ -32,9 +35,29 @@ fragment WHILE : 'while';
 fragment IF : 'if';
 fragment FOR : 'for';
 
+//OPERACIONES LOGICAS Y BOOLEANOS
+fragment OR : '||';
+fragment AND : '&&';
+fragment NOT : '!';
+
+//COMPARADORES
+fragment MAYOR : '>';
+fragment MENOR: '<';
+fragment IGUALIGUAL : '==';
+fragment DISTINTOIGUAL : '!='; 
+fragment MAYORIGUAL : '>=';
+fragment MENORIGUAL : '<=';
+
+//LETRAS Y DIGITOS
+fragment LETRA : [A-Za-z];
+fragment DIGITO : [0-9];
+
+//SIMBOLOS
+fragment PYC  : ';' ;  //Punto y coma
+fragment COMA : ',' ;  //Coma
+
 //SKIPEAMOS: espacios y saltos de línea
 WS : [\t\r\n ] -> skip; 
-
 /* 
 INSTRUCCION : ( WHILEE | IFE );
 
