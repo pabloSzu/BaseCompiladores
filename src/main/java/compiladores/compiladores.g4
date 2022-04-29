@@ -4,78 +4,189 @@ grammar compiladores;
 package compiladores;
 }
 
-
-
-//TIPOS DE DATOS
-fragment INT : 'int';
-fragment DOUBLE : 'double';
-fragment CHAR : 'char';
-fragment VOID : 'void';
-
-//CIERRES y APERTURAS
-fragment PA : '(' ; 
-fragment PC : ')' ; 
-fragment CA : '[' ; 
-fragment CC : ']' ; 
-fragment LA : '{' ; 
-fragment LC : '}' ; 
-
-//OPERACIONES 
-fragment MAS : '+';
-fragment MENOS : '-';
-fragment POR : '*';
-fragment DIVISION : '/';
-fragment MOD  : '%' ;  
-
-//ASIGNACIONES
-fragment IGUAL : '=';
-
-//CICLOS Y CONDICIONALES
-fragment WHILE : 'while';
-fragment IF : 'if';
-fragment FOR : 'for';
-
-//OPERACIONES LOGICAS Y BOOLEANOS
-fragment OR : '||';
-fragment AND : '&&';
-fragment NOT : '!';
-
-//COMPARADORES
-fragment MAYOR : '>';
-fragment MENOR: '<';
-fragment IGUALIGUAL : '==';
-fragment DISTINTOIGUAL : '!='; 
-fragment MAYORIGUAL : '>=';
-fragment MENORIGUAL : '<=';
-
-//LETRAS Y DIGITOS
 fragment LETRA : [A-Za-z];
 fragment DIGITO : [0-9];
 
-//SIMBOLOS
-fragment PYC  : ';' ;  //Punto y coma
-fragment COMA : ',' ;  //Coma
+//PARENTESIS - CORCHETES - LLAVES
+LA   : '{' ;  
+LC   : '}' ;  
+CA   : '[' ;  
+CC   : ']' ;  
+PA   : '(' ;  
+PC   : ')' ;  
 
-//SKIPEAMOS: espacios y saltos de línea
-WS : [\t\r\n ] -> skip; 
-/* 
-INSTRUCCION : ( WHILEE | IFE );
+//SEPARADORESTA
+PYC  : ';' ;  
+COMA : ',' ;  
+
+//IGUAL
+IGUAL   : '=' ;  
+
+//COMPARADORES
+MENOR  : '<' ; 
+MENORIGUAL: '<=';  
+IGUALL  : '==';  
+MAYOR  : '>' ;  
+MAYORIGUAL: '>=';  
+DISTINTO  : '!=';  
 
 
-WHILEE : WHILE ESP* '(' ESP* (LETRA|ENTERO) ESP* COMP ESP* (LETRA|ENTERO) ESP* ')' ESP* '{' ESP* INSTRUCCION+ ESP* '}';
+//OPERACIONES
+SUMA  : '+' ;  
+RESTA  : '-' ;  
+MULT  : '*' ;  
+DIV  : '/' ;  
+MOD  : '%' ;  
 
-IFE : IF ESP* '(' ESP* (LETRA|ENTERO) ESP* COMP ESP* (LETRA|ENTERO) ESP* ')' ESP* '{' ESP* INSTRUCCION+ ESP* '}';
+//TIPO DE DATOS
+INT     : 'int' ;  
+CHAR    : 'char' ;  
+DOUBLE  : 'double' ;  
+VOID    : 'void' ;  
 
-DECLARACIONES : (DOUBLE | INT) ESP+ ( (LETRA ESP* EQ ESP* ENTERO ESP* ';' ESP*) | (LETRA ESP* (','|';' ) ESP*) )+ ; 
+//LERYTAS O NUMEROS
+ENTERO : DIGITO+;
+DECIMAL : ENTERO'.'ENTERO;
 
-OPERACION : LETRA ESP* OP ESP* (LETRA | ENTERO ) ESP* ';'* ;
+//OPERACIONES LOGICAS
+OR   : '||' ;  
+AND  : '&&' ;  
+NOT  : '!'  ;  
 
-ASIGNACIONES : LETRA ESP* EQ ESP* (LETRA | ENTERO ) ESP* ';' ;
+//CICLOS
+IF   : 'if'|'IF' ;  
+ELSE : 'else'|'ELSE' ; 
+FOR  : 'for'|'FOR';  
+WHILE: 'while'|'WHILE'; 
 
-s : 
-    INSTRUCCION { System.out.println( "Instruccion-> " + $INSTRUCCION.getText()); } s
-    | DECLARACIONES { System.out.println( "Declaracion-> " + $DECLARACIONES.getText()); } s
-    | ASIGNACIONES { System.out.println( "Asignación-> " + $ASIGNACIONES.getText()); } s
-    | OPERACION { System.out.println( "Operacion-> " + $OPERACION.getText()); } s
-    | EOF
-    ;*/
+ID : (LETRA | '_') (LETRA | DIGITO | '_')*;
+
+WS : [ \n\t\r] -> skip ;
+OTRO : . ;
+
+s : programa;
+
+programa: instrucciones ; 
+
+
+instrucciones : instruccion instrucciones 
+              |
+              ;
+
+bloque : LA instrucciones LC 
+       ;
+
+instruccion : declaracion PYC
+            | asignacion PYC
+            | ciclofor
+            | ciclowhile
+            | condif
+            | funcion
+            | llamada_funcion PYC
+            | bloque
+            ;
+
+declaracion : tipodato ID
+            | tipodato ID asign
+            ;
+
+asign : IGUAL llamada_funcion
+      | IGUAL operacion
+      ;
+
+tipodato : INT
+         | CHAR
+         | DOUBLE
+         | VOID
+         ;
+
+asignacion  : ID asign
+            ;
+
+ciclofor : FOR PA asignacion PYC operacion PYC ID asign PC instruccion
+         ;
+
+ciclowhile : WHILE PA operacion PC instruccion
+           ;
+
+condif : IF PA operacion PC instruccion
+       | IF PA operacion PC instruccion ELSE instruccion
+       ;
+
+funcion : tipodato ID PA parametros PC bloque
+        ;
+
+parametros :  declaracion parametros
+           |  COMA parametros
+           |
+           ;
+
+llamada_funcion : ID PA argumentos PC
+                ;
+
+argumentos: ID argumentos
+          | COMA argumentos
+          |
+          ;
+
+operacion : opal ;
+
+opal : disyuncion 
+     |
+     ;
+
+disyuncion : conjuncion disy
+           ;
+
+disy : OR conjuncion disy
+     |
+     ;
+
+conjuncion : comparaciones conj
+           ;
+
+conj : AND comparaciones conj
+     |
+     ;
+
+comparaciones : expresion comp
+              ;
+
+comp : opcomp expresion comp
+     |
+     ;
+
+opcomp : IGUALL
+       | DISTINTO
+       | MAYOR
+       | MAYORIGUAL
+       | MENOR
+       | MENORIGUAL
+       ;
+
+expresion : termino exp;
+
+exp : SUMA termino exp
+    | RESTA termino exp
+    |
+    ;
+
+termino : factor term ;
+
+term : MULT factor term
+     | DIV factor term
+     | MOD factor term
+     |
+     ;
+
+factor : f PA opal PC
+       | f ENTERO
+       | f DECIMAL
+       | f ID
+       ;
+
+f : SUMA
+  | RESTA
+  | NOT
+  |
+  ;

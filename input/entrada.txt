@@ -1,12 +1,12 @@
 int a = 3;
-while (x > y) { 
-int d = 3;  
-y = 3; }
+
 x = 2;
-x / y;
-ifa (x < y){ y = 3;
-x / 5;
+if (x < y){ y = 3;
 int a = 3;
 a=9;
+o = 2 / u ;
  }
+ int a(){
+     b= 2;
+ } 
  
