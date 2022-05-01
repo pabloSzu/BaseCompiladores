@@ -90,13 +90,13 @@ public class compiladoresBaseListener implements compiladoresListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAsign(compiladoresParser.AsignContext ctx) { }
+	@Override public void enterAsignacion_(compiladoresParser.Asignacion_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAsign(compiladoresParser.AsignContext ctx) { }
+	@Override public void exitAsignacion_(compiladoresParser.Asignacion_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

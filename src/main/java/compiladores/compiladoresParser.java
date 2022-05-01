@@ -26,7 +26,7 @@ public class compiladoresParser extends Parser {
 		WHILE=33, ID=34, WS=35, OTRO=36;
 	public static final int
 		RULE_s = 0, RULE_programa = 1, RULE_instrucciones = 2, RULE_bloque = 3, 
-		RULE_instruccion = 4, RULE_declaracion = 5, RULE_asign = 6, RULE_tipodato = 7, 
+		RULE_instruccion = 4, RULE_declaracion = 5, RULE_asignacion_ = 6, RULE_tipodato = 7, 
 		RULE_asignacion = 8, RULE_ciclofor = 9, RULE_ciclowhile = 10, RULE_condif = 11, 
 		RULE_funcion = 12, RULE_parametros = 13, RULE_llamada_funcion = 14, RULE_argumentos = 15, 
 		RULE_operacion = 16, RULE_opal = 17, RULE_disyuncion = 18, RULE_disy = 19, 
@@ -36,7 +36,7 @@ public class compiladoresParser extends Parser {
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"s", "programa", "instrucciones", "bloque", "instruccion", "declaracion", 
-			"asign", "tipodato", "asignacion", "ciclofor", "ciclowhile", "condif", 
+			"asignacion_", "tipodato", "asignacion", "ciclofor", "ciclowhile", "condif", 
 			"funcion", "parametros", "llamada_funcion", "argumentos", "operacion", 
 			"opal", "disyuncion", "disy", "conjuncion", "conj", "comparaciones", 
 			"comp", "opcomp", "expresion", "exp", "termino", "term", "factor", "f"
@@ -453,8 +453,8 @@ public class compiladoresParser extends Parser {
 			return getRuleContext(TipodatoContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(compiladoresParser.ID, 0); }
-		public AsignContext asign() {
-			return getRuleContext(AsignContext.class,0);
+		public Asignacion_Context asignacion_() {
+			return getRuleContext(Asignacion_Context.class,0);
 		}
 		public DeclaracionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -499,7 +499,7 @@ public class compiladoresParser extends Parser {
 				setState(96);
 				match(ID);
 				setState(97);
-				asign();
+				asignacion_();
 				}
 				break;
 			}
@@ -515,7 +515,7 @@ public class compiladoresParser extends Parser {
 		return _localctx;
 	}
 
-	public static class AsignContext extends ParserRuleContext {
+	public static class Asignacion_Context extends ParserRuleContext {
 		public TerminalNode IGUAL() { return getToken(compiladoresParser.IGUAL, 0); }
 		public Llamada_funcionContext llamada_funcion() {
 			return getRuleContext(Llamada_funcionContext.class,0);
@@ -523,28 +523,28 @@ public class compiladoresParser extends Parser {
 		public OperacionContext operacion() {
 			return getRuleContext(OperacionContext.class,0);
 		}
-		public AsignContext(ParserRuleContext parent, int invokingState) {
+		public Asignacion_Context(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_asign; }
+		@Override public int getRuleIndex() { return RULE_asignacion_; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof compiladoresListener ) ((compiladoresListener)listener).enterAsign(this);
+			if ( listener instanceof compiladoresListener ) ((compiladoresListener)listener).enterAsignacion_(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof compiladoresListener ) ((compiladoresListener)listener).exitAsign(this);
+			if ( listener instanceof compiladoresListener ) ((compiladoresListener)listener).exitAsignacion_(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof compiladoresVisitor ) return ((compiladoresVisitor<? extends T>)visitor).visitAsign(this);
+			if ( visitor instanceof compiladoresVisitor ) return ((compiladoresVisitor<? extends T>)visitor).visitAsignacion_(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final AsignContext asign() throws RecognitionException {
-		AsignContext _localctx = new AsignContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_asign);
+	public final Asignacion_Context asignacion_() throws RecognitionException {
+		Asignacion_Context _localctx = new Asignacion_Context(_ctx, getState());
+		enterRule(_localctx, 12, RULE_asignacion_);
 		try {
 			setState(105);
 			_errHandler.sync(this);
@@ -636,8 +636,8 @@ public class compiladoresParser extends Parser {
 
 	public static class AsignacionContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(compiladoresParser.ID, 0); }
-		public AsignContext asign() {
-			return getRuleContext(AsignContext.class,0);
+		public Asignacion_Context asignacion_() {
+			return getRuleContext(Asignacion_Context.class,0);
 		}
 		public AsignacionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -667,7 +667,7 @@ public class compiladoresParser extends Parser {
 			setState(109);
 			match(ID);
 			setState(110);
-			asign();
+			asignacion_();
 			}
 		}
 		catch (RecognitionException re) {
@@ -695,8 +695,8 @@ public class compiladoresParser extends Parser {
 			return getRuleContext(OperacionContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(compiladoresParser.ID, 0); }
-		public AsignContext asign() {
-			return getRuleContext(AsignContext.class,0);
+		public Asignacion_Context asignacion_() {
+			return getRuleContext(Asignacion_Context.class,0);
 		}
 		public TerminalNode PC() { return getToken(compiladoresParser.PC, 0); }
 		public InstruccionContext instruccion() {
@@ -742,7 +742,7 @@ public class compiladoresParser extends Parser {
 			setState(118);
 			match(ID);
 			setState(119);
-			asign();
+			asignacion_();
 			setState(120);
 			match(PC);
 			setState(121);

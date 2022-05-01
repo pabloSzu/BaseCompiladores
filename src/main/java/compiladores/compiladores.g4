@@ -44,7 +44,7 @@ CHAR    : 'char' ;
 DOUBLE  : 'double' ;  
 VOID    : 'void' ;  
 
-//LERYTAS O NUMEROS
+//LETRAS O NUMEROS
 ENTERO : DIGITO+;
 DECIMAL : ENTERO'.'ENTERO;
 
@@ -66,16 +66,28 @@ OTRO : . ;
 
 s : programa;
 
+//un programa tiene instrucciones
 programa: instrucciones ; 
 
-
+//unas instrucciones tiene una instruccion, seguida de más instrucciones
 instrucciones : instruccion instrucciones 
               |
               ;
 
+//un bloque es {instrucciones}
 bloque : LA instrucciones LC 
        ;
 
+/*
+una instrucción puede ser: - "declaración;" 
+- "asignacion ; " 
+- "ciclofor ; " 
+- "ciclowhile" 
+- "condif" 
+- "funcion" 
+- "llamada_funcion ; " 
+- "bloque" 
+*/
 instruccion : declaracion PYC
             | asignacion PYC
             | ciclofor
@@ -87,10 +99,10 @@ instruccion : declaracion PYC
             ;
 
 declaracion : tipodato ID
-            | tipodato ID asign
+            | tipodato ID asignacion_
             ;
 
-asign : IGUAL llamada_funcion
+asignacion_ : IGUAL llamada_funcion
       | IGUAL operacion
       ;
 
@@ -100,10 +112,10 @@ tipodato : INT
          | VOID
          ;
 
-asignacion  : ID asign
+asignacion  : ID asignacion_
             ;
 
-ciclofor : FOR PA asignacion PYC operacion PYC ID asign PC instruccion
+ciclofor : FOR PA asignacion PYC operacion PYC ID asignacion_ PC instruccion
          ;
 
 ciclowhile : WHILE PA operacion PC instruccion
