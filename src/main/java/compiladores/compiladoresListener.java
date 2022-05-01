@@ -100,6 +100,16 @@ public interface compiladoresListener extends ParseTreeListener {
 	 */
 	void exitAsignacion(compiladoresParser.AsignacionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#masmas_menosmenos}.
+	 * @param ctx the parse tree
+	 */
+	void enterMasmas_menosmenos(compiladoresParser.Masmas_menosmenosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#masmas_menosmenos}.
+	 * @param ctx the parse tree
+	 */
+	void exitMasmas_menosmenos(compiladoresParser.Masmas_menosmenosContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#ciclofor}.
 	 * @param ctx the parse tree
 	 */

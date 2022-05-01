@@ -67,6 +67,12 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAsignacion(compiladoresParser.AsignacionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#masmas_menosmenos}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMasmas_menosmenos(compiladoresParser.Masmas_menosmenosContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#ciclofor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

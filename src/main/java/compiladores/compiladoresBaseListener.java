@@ -126,6 +126,18 @@ public class compiladoresBaseListener implements compiladoresListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMasmas_menosmenos(compiladoresParser.Masmas_menosmenosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMasmas_menosmenos(compiladoresParser.Masmas_menosmenosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCiclofor(compiladoresParser.CicloforContext ctx) { }
 	/**
 	 * {@inheritDoc}

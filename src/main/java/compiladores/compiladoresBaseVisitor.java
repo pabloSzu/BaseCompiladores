@@ -82,6 +82,13 @@ public class compiladoresBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitMasmas_menosmenos(compiladoresParser.Masmas_menosmenosContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitCiclofor(compiladoresParser.CicloforContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

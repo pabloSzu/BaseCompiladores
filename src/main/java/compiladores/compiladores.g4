@@ -38,6 +38,10 @@ MULT  : '*' ;
 DIV  : '/' ;  
 MOD  : '%' ;  
 
+//INCREMENTO O DISMINUCIÓN
+MASMAS  : '++' ;  
+MENOSMENOS  : '--' ;  
+
 //TIPO DE DATOS
 INT     : 'int' ;  
 CHAR    : 'char' ;  
@@ -66,20 +70,20 @@ OTRO : . ;
 
 s : programa;
 
-//un programa tiene instrucciones
+//programa tiene instrucciones
 programa: instrucciones ; 
 
-//unas instrucciones tiene una instruccion, seguida de más instrucciones
+//instrucciones tiene una instruccion, seguida de más instrucciones
 instrucciones : instruccion instrucciones 
               |
               ;
 
-//un bloque es {instrucciones}
+//bloque es {instrucciones}
 bloque : LA instrucciones LC 
        ;
 
 /*
-una instrucción puede ser: - "declaración;" 
+instrucción puede ser: - "declaración;" 
 - "asignacion ; " 
 - "ciclofor ; " 
 - "ciclowhile" 
@@ -98,49 +102,83 @@ instruccion : declaracion PYC
             | bloque
             ;
 
+/*
+ declaración es: 
+ -"(char-int-etc) nombre_variable"
+ -"(char-int-etc) nombre_variable asignacion_"
+ */
 declaracion : tipodato ID
             | tipodato ID asignacion_
             ;
 
+/*
+asignacion_ es:
+- "= nombre_funcion()"
+- "= operacion"
+ */
 asignacion_ : IGUAL llamada_funcion
       | IGUAL operacion
       ;
 
+//tipo de datos
 tipodato : INT
          | CHAR
          | DOUBLE
          | VOID
          ;
 
+/*
+asignacion es:
+- "nombre_variable = nombre_funcion()"
+- "nombre_variable = operacion"
+ */
 asignacion  : ID asignacion_
             ;
 
-ciclofor : FOR PA asignacion PYC operacion PYC ID asignacion_ PC instruccion
+// "++"  o  "--"
+masmas_menosmenos: MASMAS
+     |MENOSMENOS;
+
+
+//ciclofor : for(nombre_variable = 0 ; nombre_variable < 0 ; nombre_variable ++ )
+ciclofor : FOR PA asignacion PYC operacion PYC ID masmas_menosmenos PC instruccion
          ;
 
+//ciclowhile : while(nombre_variable < 0 )
 ciclowhile : WHILE PA operacion PC instruccion
            ;
 
+/*
+condif es:
+- " if( nombre_variable < 0) "
+- " if( nombre_variable < 0) {...} else {...} "
+ */
 condif : IF PA operacion PC instruccion
        | IF PA operacion PC instruccion ELSE instruccion
        ;
 
+//funcion es: tipo nombre_funcion ( parametros ) {...}
 funcion : tipodato ID PA parametros PC bloque
         ;
 
+
+//parametros es: ( int a, char b, ... )
 parametros :  declaracion parametros
            |  COMA parametros
            |
            ;
 
+//llamada_funcion es: nombre_funcion( argumentos )
 llamada_funcion : ID PA argumentos PC
                 ;
 
+//argumentos es: (args, args, ...)
 argumentos: ID argumentos
           | COMA argumentos
           |
           ;
 
+//CICLO DE OPERACIONES LÓGICAS//////////////////////////////////////////////////////
 operacion : opal ;
 
 opal : disyuncion 
@@ -175,6 +213,8 @@ opcomp : IGUALL
        | MENOR
        | MENORIGUAL
        ;
+//////////////////////////////////////////////////////////////////////////////////////
+
 
 expresion : termino exp;
 
