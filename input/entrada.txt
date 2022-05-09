@@ -1,3 +1,14 @@
-probando 123 probando
-3 palabras
-3_aa
+int a = 3;
+
+x = 2;
+if (x < y){ y = 3;
+int a = 3;
+a=9;
+o = 2 / u ;
+ }
+ int a(){
+     b= 2;
+ } 
+ for ( a = 0; a < 10 ; a ++){
+     x=y;
+ }
