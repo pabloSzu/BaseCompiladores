@@ -1,0 +1,23 @@
+La Tabla de simbolos permite registrar los identificadores:
+- nombre de las variables
+- nombre de las funciones
+
+Posiblemente, tambien palabras reservadas
+
+¿Que necesitamos saber de un identificador?
+- Token (string)
+- Tipo de dato
+- Inicializada (definida)
+- Usada
+- Si es funcion, conocer argumentos (tipo de dato)
+                                        '---> tamaño de variables
+
+Opciones para implementarla
+
+- Necesitamos que sea una clase (objetos) o estructura de datos
++ Si usamos clases, conviene herencia para separar variables de funciones
+
+- Necesitamos que sea una coleccion
++Podemos usar una lista enlazada
++Lo mas apropiado es un diccionario
++`Simpliofica el uso la mezcla de ambos
