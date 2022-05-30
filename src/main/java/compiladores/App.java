@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 // Las diferentes entradas se explicaran oportunamente
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, Compilador!!!");
+        //System.out.println("Hello, Compilador!!!");
         // create a CharStream that reads from file
         CharStream input = CharStreams.fromFileName("input/entrada.txt");
 
@@ -25,15 +25,16 @@ public class App {
         //recibe la secuencia de tokens y nos devuelve un objeto tipo parser
                 
         // create Listener
-        // ExpRegBaseListener escucha = new Escucha();
+        compiladoresBaseListener escucha = new miListener();
 
         // Conecto el objeto con Listeners al parser
-        // parser.addParseListener(escucha);
+        parser.addParseListener(escucha);
 
         // Solicito al parser que comience indicando una regla gramatical
         // En este caso la regla es el simbolo inicial
-        parser.s();
-        // ParseTree tree =  parser.s();
+        // ParseTree tree =  parser.s();        
+        ParseTree tree =  parser.programa();
+        System.out.println(tree);
         // Conectamos el visitor
         // Caminante visitor = new Caminante();
         // visitor.visit(tree);
