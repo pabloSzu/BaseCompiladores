@@ -72,18 +72,30 @@ ID : (LETRA | '_') (LETRA | DIGITO | '_')*;
 WS : [ \n\t\r] -> skip ;
 OTRO : . ;
 
-
+//programa tiene instrucciones
 programa: instrucciones ; 
 
+//instrucciones tiene una instruccion, seguida de más instrucciones
 instrucciones : instruccion instrucciones 
               |  bloque instrucciones
               |
               ;
 
+//bloque es {instrucciones}
 bloque : LA instrucciones LC 
        ;
 
-
+puntocoma: PYC;
+/*
+instrucción puede ser: 
+- "declaración;" 
+- "asignacion ; " 
+- "ciclofor ; " 
+- "ciclowhile" 
+- "condif" 
+- "funcion" 
+- "llamada_funcion ; " 
+*/
 instruccion : declaracion PYC
             | asignacion PYC
             | iwhile
@@ -98,8 +110,10 @@ instruccion : declaracion PYC
 verificador : ID | ENTERO ;
 
 
-
-
+/*
+ declaración es: 
+ -(tipo de dato) -> asignación simple
+ */
 declaracion :  tipo_de_datos asignacion_simple;
 
 tipo_de_datos : INT 
@@ -107,8 +121,12 @@ tipo_de_datos : INT
               | FLOAT
               ;
 
+/*
+ Y la asignación puede ser: 
+ -(tipo de dato) nombre_variable = algo;
+ -(tipo de dato) nombre_variable;
+ */
 asignacion_simple : ID IGUAL verificador
-                  | ID IGUAL COMA asignacion_simple
                   | ID
                   | ID COMA asignacion_simple
                   ;
@@ -171,22 +189,29 @@ pos_pre_incremento : verificador SUMA SUMA
                    ;
 
 
+//ciclofor : for(nombre_variable = 0 ; nombre_variable < 0 ; nombre_variable ++ )
 bloque_for : PA ( (declaracion | asignacion) PYC bloque_estructuras_de_control  PYC pos_pre_incremento ) PC ;
 
 
+//ciclowhile : while(nombre_variable < 0 )
 iwhile : WHILE_ PA bloque_estructuras_de_control PC bloque ;
   
 
+/*
+condif es:
+- " if( nombre_variable < 0) "
+ */
 iif : IF_ PA bloque_estructuras_de_control  PC bloque  ;
 
 
 ifor : FOR_ bloque_for bloque ;
 
-
+//para la declaración de variaas variables
 una_o_mas_variables : declaracion una_o_mas_variables
                     | declaracion
                     |
                     ; 
+
 
 tipo_de_funcion : VOID ;
 

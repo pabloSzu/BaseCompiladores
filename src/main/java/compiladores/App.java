@@ -24,15 +24,16 @@ public class App {
         compiladoresParser parser = new compiladoresParser(tokens);
         //recibe la secuencia de tokens y nos devuelve un objeto tipo parser
                 
-        // create Listener
-        compiladoresBaseListener escucha = new miListener();
 
-        // Conecto el objeto con Listeners al parser
-        parser.addParseListener(escucha);
+
+
+        
+        //compiladoresBaseListener escucha = new miListener();
+        //parser.addParseListener(escucha);
  
-        // Solicito al parser que comience indicando una regla gramatical
-        // En este caso la regla es el simbolo inicial
-        // parser.s();
+
+
+
         ParseTree tree =  parser.programa();
         System.out.println(tree);
         

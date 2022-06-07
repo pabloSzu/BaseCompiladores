@@ -31,6 +31,12 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBloque(compiladoresParser.BloqueContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#puntocoma}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPuntocoma(compiladoresParser.PuntocomaContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#instruccion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

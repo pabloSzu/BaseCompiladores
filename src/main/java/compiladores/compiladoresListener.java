@@ -40,6 +40,16 @@ public interface compiladoresListener extends ParseTreeListener {
 	 */
 	void exitBloque(compiladoresParser.BloqueContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#puntocoma}.
+	 * @param ctx the parse tree
+	 */
+	void enterPuntocoma(compiladoresParser.PuntocomaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#puntocoma}.
+	 * @param ctx the parse tree
+	 */
+	void exitPuntocoma(compiladoresParser.PuntocomaContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#instruccion}.
 	 * @param ctx the parse tree
 	 */

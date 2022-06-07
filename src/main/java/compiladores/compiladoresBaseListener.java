@@ -54,6 +54,18 @@ public class compiladoresBaseListener implements compiladoresListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPuntocoma(compiladoresParser.PuntocomaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPuntocoma(compiladoresParser.PuntocomaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterInstruccion(compiladoresParser.InstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
