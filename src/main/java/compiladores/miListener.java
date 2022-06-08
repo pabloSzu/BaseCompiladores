@@ -1,23 +1,24 @@
-package tp1;
+package compiladores;
 
-import tp1.TablaSimbolos.*;
+import compiladores.TablaSimbolos.*;
+import compiladores.compiladoresParser.BloqueContext;
 
 import java.util.LinkedList;
 
 
-public class miListener extends programaBaseListener {
+public class miListener extends compiladoresBaseListener {
 
     private TablaSimbolos simbolTable = TablaSimbolos.getInstance();
    
-    programaParser parser;
+    compiladoresParser parser;
 
     public miListener() {
     }
 
     @Override 
-    public void enterBloque( programaParser.BloqueContext ctx) { 
-        if (ctx.getParent().getClass().equals( programaParser.Definicion_funcionContext.class)) {
-             programaParser.Definicion_funcionContext fnctx = ( programaParser.Definicion_funcionContext) ctx.getParent();
+    public void enterBloque( BloqueContext ctx) { 
+        if (ctx.getParent().getClass().equals( compiladoresParser.Definicion_funcionContext.class)) {
+             compiladoresParser.Definicion_funcionContext fnctx = ( compiladoresParser.Definicion_funcionContext) ctx.getParent();
             Funcion funcion = DataFuncion.getDataFuncion(fnctx);
 
             if (!this.simbolTable.isVariableDeclared(funcion)){
@@ -38,13 +39,13 @@ public class miListener extends programaBaseListener {
 
     
     @Override 
-    public void exitBloque( programaParser.BloqueContext ctx) {
+    public void exitBloque( compiladoresParser.BloqueContext ctx) {
         this.simbolTable.removeContext();
     }
 
     @Override 
-    public void exitDeclaracion(programaParser.DeclaracionContext ctx) {
-       programaParser.Asignacion_simpleContext lista = ctx.asignacion_simple();
+    public void exitDeclaracion(compiladoresParser.DeclaracionContext ctx) {
+       compiladoresParser.Asignacion_simpleContext lista = ctx.asignacion_simple();
        while (lista != null) {
            if (lista.asignacion_simple() == null) {
                ID id = new Variable(lista.ID().getText(), ctx.tipo_de_datos().getText());
@@ -61,20 +62,20 @@ public class miListener extends programaBaseListener {
 
 
     @Override
-         public void exitAsignacion( programaParser.AsignacionContext ctx){
+         public void exitAsignacion( compiladoresParser.AsignacionContext ctx){
         ID variable = this.simbolTable.searchVariable(ctx.ID().getText());
         int linea = ctx.getStart().getLine(); // el numero de linea es para el parser error
 
-        if (ctx.getParent().getClass().equals( programaParser.AsignacionContext.class)) {
-             programaParser.AsignacionContext lista = ( programaParser.AsignacionContext) ctx.getParent();
+        if (ctx.getParent().getClass().equals( compiladoresParser.AsignacionContext.class)) {
+             compiladoresParser.AsignacionContext lista = ( compiladoresParser.AsignacionContext) ctx.getParent();
             
-            while(lista.getParent().getClass().equals( programaParser.AsignacionContext.class)) {
-                lista = ( programaParser.AsignacionContext) lista.getParent();
+            while(lista.getParent().getClass().equals( compiladoresParser.AsignacionContext.class)) {
+                lista = ( compiladoresParser.AsignacionContext) lista.getParent();
             }
 
-            if (lista.getParent().getClass().equals( programaParser.DeclaracionContext.class)) {
+            if (lista.getParent().getClass().equals( compiladoresParser.DeclaracionContext.class)) {
                 String nombreVariable = ctx.ID().getText();
-                String tipoVariable = (( programaParser.DeclaracionContext) lista.getParent()).tipo_de_datos().getText();
+                String tipoVariable = (( compiladoresParser.DeclaracionContext) lista.getParent()).tipo_de_datos().getText();
                 variable = new Variable(nombreVariable, tipoVariable);
                 
                 if (!this.simbolTable.isVariableDeclared(variable)) {
@@ -97,7 +98,7 @@ public class miListener extends programaBaseListener {
     }
   
     @Override 
-    public void exitDeclaracion_funcion(programaParser.Declaracion_funcionContext ctx) {
+    public void exitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx) {
         Funcion funcion = null;
 
         if (ctx.tipo_de_datos() != null)
@@ -128,10 +129,10 @@ public class miListener extends programaBaseListener {
     }
 
     @Override 
-    public void exitDefinicion_funcion(programaParser.Definicion_funcionContext ctx) { 
+    public void exitDefinicion_funcion(compiladoresParser.Definicion_funcionContext ctx) { 
         if (!ctx.ID().getText().equals("main")){
             if (ctx.bloque().instrucciones() != null) {
-                programaParser.InstruccionesContext inst = ctx.bloque().instrucciones();
+                compiladoresParser.InstruccionesContext inst = ctx.bloque().instrucciones();
                 while(inst != null) {
                     if (inst.instruccion() != null){
                         if(inst.instruccion().finalizar_con_return() != null) {
@@ -164,16 +165,16 @@ public class miListener extends programaBaseListener {
 
 
     @Override
-    public void exitPuntocoma(programaParser.PuntocomaContext ctx) {
-        if (ctx.PYQ() != null) {
-            if (!ctx.PYQ().getText().equals(";")) {
+    public void exitPuntocoma(compiladoresParser.PuntocomaContext ctx) {
+        if (ctx.PYC() != null) {
+            if (!ctx.PYC().getText().equals(";")) {
                 ErrorListener.printError(ctx.getStop().getLine(),"Falta punto y coma");
             }
         }
     }
 
    @Override
-   public void exitPrograma(programaParser.ProgramaContext ctx){
+   public void exitPrograma(compiladoresParser.ProgramaContext ctx){
        this.simbolTable.removeContext();
        this.simbolTable.printTable();
        this.toString();

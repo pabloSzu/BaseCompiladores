@@ -1,4 +1,4 @@
-package tp1.TablaSimbolos;
+package compiladores.TablaSimbolos;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,6 +31,10 @@ public class TablaSimbolos {
         this.historialTablaSimbolos.add(context);
     }
 
+    public void removeContext() {
+        this.tablaSimbolos.removeLast();
+    }
+
     public void addParamForContext() {
         this.tablaSimbolos.add(new HashMap<String, ID>());
     }
@@ -39,9 +43,6 @@ public class TablaSimbolos {
         return this.tablaSimbolos.size();
     }
 
-    public void removeContext() {
-        this.tablaSimbolos.removeLast();
-    }
 
     public ID searchId(final ID id) {
         for(int i = 0; i < this.tablaSimbolos.size(); i++) {
@@ -65,17 +66,6 @@ public class TablaSimbolos {
         this.historialTablaSimbolos.get(this.historialTablaSimbolos.size() - 1).put(id.getNombre(), id);
     }
     
-    public Boolean asignacionId(final ID id) {
-        for(int i = this.tablaSimbolos.size() - 1; i >= 0; i--) {
-            if(this.tablaSimbolos.get(i).containsKey(id.getNombre())) {
-                this.tablaSimbolos.get(i).replace(id.getNombre(), id);
-                this.historialTablaSimbolos.get(i).replace(id.getNombre(), id);
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void addFuncion(final Funcion funcion) {
         this.tablaSimbolos.getLast().put(funcion.getNombre(), funcion);
         if (this.tablaSimbolos.size() == 0){
@@ -91,6 +81,18 @@ public class TablaSimbolos {
     public void addParamFuncion(final ID id) {
         this.tablaSimbolos.getLast().put(id.getNombre(), id);
     }
+
+
+    public void asignacionId(final ID id) {
+        for(int i = this.tablaSimbolos.size() - 1; i >= 0; i--) {
+            if(this.tablaSimbolos.get(i).containsKey(id.getNombre())) {
+                this.tablaSimbolos.get(i).replace(id.getNombre(), id);
+                this.historialTablaSimbolos.get(i).replace(id.getNombre(), id);
+                break;
+            }
+        }
+    }
+
 
     public boolean isVariableDeclared(final ID id) {
         for(int i = this.tablaSimbolos.size() - 1; i >= 0; i--) {

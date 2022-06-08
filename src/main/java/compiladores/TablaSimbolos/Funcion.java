@@ -1,4 +1,4 @@
-package tp1.TablaSimbolos;
+package compiladores.TablaSimbolos;
 
 import java.util.Iterator;
 import java.util.LinkedList;

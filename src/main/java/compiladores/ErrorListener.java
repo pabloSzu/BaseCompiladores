@@ -1,4 +1,4 @@
-package tp1;
+package compiladores;
 
 public class ErrorListener {
     private static ErrorListener instance = null;

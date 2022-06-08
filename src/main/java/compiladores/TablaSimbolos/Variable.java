@@ -1,4 +1,4 @@
-package tp1.TablaSimbolos;
+package compiladores.TablaSimbolos;
 
 public class Variable extends ID {
 

@@ -4,8 +4,8 @@ grammar compiladores;
 package compiladores;
 }
 
-fragment LETRA : [A-Za-z];
-fragment DIGITO : [0-9];
+fragment LETRA : [A-Za-z] ;
+fragment DIGITO : [0-9] ;
 
 //PARENTESIS - CORCHETES - LLAVES
 LA   : '{' ;  
@@ -47,6 +47,7 @@ INT     : 'int' ;
 CHAR    : 'char' ;  
 DOUBLE  : 'double' ;  
 VOID    : 'void' ;  
+FLOAT    : 'float' ;  
 
 //LETRAS O NUMEROS
 ENTERO : DIGITO+;
@@ -58,23 +59,25 @@ AND  : '&&' ;
 NOT  : '!'  ;  
 
 //CICLOS
-IF   : 'if'|'IF' ;  
-ELSE : 'else'|'ELSE' ; 
-FOR  : 'for'|'FOR';  
-WHILE: 'while'|'WHILE'; 
+IF_   : 'if'|'IF' ;  
+ELSE_ : 'else'|'ELSE' ; 
+FOR_  : 'for'|'FOR';  
+WHILE_: 'while'|'WHILE_'; 
+
+//RETURN
+RETURN : 'return' ;
 
 ID : (LETRA | '_') (LETRA | DIGITO | '_')*;
 
 WS : [ \n\t\r] -> skip ;
 OTRO : . ;
 
-s : programa;
-
 //programa tiene instrucciones
 programa: instrucciones ; 
 
 //instrucciones tiene una instruccion, seguida de más instrucciones
 instrucciones : instruccion instrucciones 
+              |  bloque instrucciones
               |
               ;
 
@@ -82,163 +85,153 @@ instrucciones : instruccion instrucciones
 bloque : LA instrucciones LC 
        ;
 
+puntocoma: PYC;
 /*
-instrucción puede ser: - "declaración;" 
+instrucción puede ser: 
+- "declaración;" 
 - "asignacion ; " 
 - "ciclofor ; " 
 - "ciclowhile" 
 - "condif" 
 - "funcion" 
 - "llamada_funcion ; " 
-- "bloque" 
 */
 instruccion : declaracion PYC
             | asignacion PYC
-            | ciclofor
-            | ciclowhile
-            | condif
-            | funcion
-            | llamada_funcion PYC
-            | bloque
+            | iwhile
+            | iif
+            | ifor
+            | funcion PYC
+            | declaracion_funcion PYC
+            | definicion_funcion
+            | finalizar_con_return PYC
             ;
+
+verificador : ID | ENTERO ;
+
 
 /*
  declaración es: 
- -"(char-int-etc) nombre_variable"
- -"(char-int-etc) nombre_variable asignacion_"
+ -(tipo de dato) -> asignación simple
  */
-declaracion : tipodato ID
-            | tipodato ID asignacion_
-            ;
+declaracion :  tipo_de_datos asignacion_simple;
+
+tipo_de_datos : INT 
+              | DOUBLE 
+              | FLOAT
+              ;
 
 /*
-asignacion_ es:
-- "= nombre_funcion()"
-- "= operacion"
+ Y la asignación puede ser: 
+ -(tipo de dato) nombre_variable = algo;
+ -(tipo de dato) nombre_variable;
  */
-asignacion_ : IGUAL llamada_funcion
-      | IGUAL operacion
-      ;
+asignacion_simple : ID IGUAL verificador
+                  | ID
+                  | ID COMA asignacion_simple
+                  ;
+                  
 
-//tipo de datos
-tipodato : INT
-         | CHAR
-         | DOUBLE
-         | VOID
-         ;
+asignacion : ID IGUAL opal ;
 
-/*
-asignacion es:
-- "nombre_variable = nombre_funcion()"
-- "nombre_variable = operacion"
- */
-asignacion  : ID asignacion_
+opal : exp ;
+
+exp : term e ;
+
+e : SUMA   term e
+  | RESTA term e
+  |
+  ;
+
+term : factor t ;
+
+t : MULT factor t
+  | DIV  factor t
+  |
+  ;
+
+factor : ID
+       | ENTERO
+       | PA exp PC
+       ;
+
+
+logico_comp : OR 
+            | AND
             ;
 
-// "++"  o  "--"
-masmas_menosmenos: MASMAS
-     |MENOSMENOS;
+comparacion : MAYOR
+            | MENOR 
+            | MAYORIGUAL 
+            | MENORIGUAL 
+            | IGUALL 
+            | DISTINTO 
+            ;
+
+comp : verificador logico_comp comp
+     | verificador
+     ;
+
+bloque_estructuras_de_control : verificador comparacion verificador bloque_estructuras_de_control
+                              | PA comp comparacion verificador  bloque_estructuras_de_control
+                              | PA comp bloque_estructuras_de_control
+                              | PC comparacion verificador bloque_estructuras_de_control
+                              | PC logico_comp bloque_estructuras_de_control
+                              | PC
+                              | logico_comp bloque_estructuras_de_control
+                              |
+                              ; 
+
+pos_pre_incremento : verificador SUMA SUMA 
+                   | verificador MENOSMENOS
+                   | MASMAS verificador
+                   | MENOSMENOS verificador
+                   ;
 
 
 //ciclofor : for(nombre_variable = 0 ; nombre_variable < 0 ; nombre_variable ++ )
-ciclofor : FOR PA asignacion PYC operacion PYC ID masmas_menosmenos PC instruccion
-         ;
+bloque_for : PA ( (declaracion | asignacion) PYC bloque_estructuras_de_control  PYC pos_pre_incremento ) PC ;
+
 
 //ciclowhile : while(nombre_variable < 0 )
-ciclowhile : WHILE PA operacion PC instruccion
-           ;
+iwhile : WHILE_ PA bloque_estructuras_de_control PC bloque ;
+  
 
 /*
 condif es:
 - " if( nombre_variable < 0) "
-- " if( nombre_variable < 0) {...} else {...} "
  */
-condif : IF PA operacion PC instruccion
-       | IF PA operacion PC instruccion ELSE instruccion
-       ;
+iif : IF_ PA bloque_estructuras_de_control  PC bloque  ;
 
-//funcion es: tipo nombre_funcion ( parametros ) {...}
-funcion : tipodato ID PA parametros PC bloque
+
+ifor : FOR_ bloque_for bloque ;
+
+//para la declaración de variaas variables
+una_o_mas_variables : declaracion una_o_mas_variables
+                    | declaracion
+                    |
+                    ; 
+
+
+tipo_de_funcion : VOID ;
+
+funcion : tipo_de_datos ID PA una_o_mas_variables PC
+        | ID PA PC
         ;
 
 
-//parametros es: ( int a, char b, ... )
-parametros :  declaracion parametros
-           |  COMA parametros
-           |
-           ;
+declaracion_funcion : tipo_de_datos ID PA param_declaracion PC;
+                    
+definicion_funcion: tipo_de_datos ID PA param_definicion PC bloque;
 
-//llamada_funcion es: nombre_funcion( argumentos )
-llamada_funcion : ID PA argumentos PC
-                ;
+param_declaracion : tipo_de_datos(ID | )
+		              | tipo_de_datos (ID | ) COMA param_declaracion
+                  |
+		              ;
 
-//argumentos es: (args, args, ...)
-argumentos: ID argumentos
-          | COMA argumentos
-          |
-          ;
+param_definicion : tipo_de_datos ID
+		             | tipo_de_datos ID COMA param_definicion
+                 |
+	            	 ; 
 
-//CICLO DE OPERACIONES LÓGICAS//////////////////////////////////////////////////////
-operacion : opal ;
-
-opal : disyuncion 
-     |
-     ;
-
-disyuncion : conjuncion disy
-           ;
-
-disy : OR conjuncion disy
-     |
-     ;
-
-conjuncion : comparaciones conj
-           ;
-
-conj : AND comparaciones conj
-     |
-     ;
-
-comparaciones : expresion comp
-              ;
-
-comp : opcomp expresion comp
-     |
-     ;
-
-opcomp : IGUALL
-       | DISTINTO
-       | MAYOR
-       | MAYORIGUAL
-       | MENOR
-       | MENORIGUAL
-       ;
-//////////////////////////////////////////////////////////////////////////////////////
-
-
-expresion : termino exp;
-
-exp : SUMA termino exp
-    | RESTA termino exp
-    |
-    ;
-
-termino : factor term ;
-
-term : MULT factor term
-     | DIV factor term
-     | MOD factor term
-     |
-     ;
-
-factor : f PA opal PC
-       | f ENTERO
-       | f DECIMAL
-       | f ID
-       ;
-
-f : SUMA
-  | RESTA
-  | NOT
-  |
-  ;
+finalizar_con_return : RETURN ( term | )  ;

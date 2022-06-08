@@ -1,4 +1,4 @@
-package tp1;
+package compiladores;
 
 import java.util.LinkedList;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -6,12 +6,12 @@ import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.xpath.XPath;
 
-import tp1.TablaSimbolos.*;
+import compiladores.TablaSimbolos.*;
 
 
 public class DataFuncion {
 
-    public static Funcion getDataFuncion( programaParser.Definicion_funcionContext ctx) {
+    public static Funcion getDataFuncion( compiladoresParser.Definicion_funcionContext ctx) {
         
         TablaSimbolos tablaSimbolos = TablaSimbolos.getInstance();
         ErrorListener error = ErrorListener.getInstance();
@@ -54,8 +54,8 @@ public class DataFuncion {
 
     public static LinkedList<ID> getParametros(ParserRuleContext ruleCtx, LinkedList<ID> parametros) {
         //si es una definicion de una funcion
-        if(ruleCtx.getClass().equals( programaParser.Una_o_mas_variablesContext.class)) {
-             programaParser.Una_o_mas_variablesContext paramDefCtx = ( programaParser.Una_o_mas_variablesContext) ruleCtx;
+        if(ruleCtx.getClass().equals( compiladoresParser.Una_o_mas_variablesContext.class)) {
+             compiladoresParser.Una_o_mas_variablesContext paramDefCtx = ( compiladoresParser.Una_o_mas_variablesContext) ruleCtx;
             
             // si hay al menos 2 parametros en la funcion definida
             if (paramDefCtx.una_o_mas_variables() != null) {
@@ -74,10 +74,10 @@ public class DataFuncion {
         }
     }
 
-    public static LinkedList< programaParser.FactorContext> getFactores(ParseTree parseTree, Parser parser) {
-        LinkedList< programaParser.FactorContext> factores = new LinkedList< programaParser.FactorContext>();
+    public static LinkedList< compiladoresParser.FactorContext> getFactores(ParseTree parseTree, Parser parser) {
+        LinkedList< compiladoresParser.FactorContext> factores = new LinkedList< compiladoresParser.FactorContext>();
         for (ParseTree ctx : XPath.findAll(parseTree, "//factor", parser)) {
-            factores.add(( programaParser.FactorContext) ctx);
+            factores.add(( compiladoresParser.FactorContext) ctx);
         }
         if (factores.size() > 0) {
             return factores;
@@ -86,7 +86,7 @@ public class DataFuncion {
         }
     }
 
-    public static boolean validarFuncion(Funcion funcion,  programaParser.Declaracion_funcionContext ctx) {
+    public static boolean validarFuncion(Funcion funcion,  compiladoresParser.Declaracion_funcionContext ctx) {
       TablaSimbolos tablaSimbolos = TablaSimbolos.getInstance();
         if (tablaSimbolos.getDefFuncion(funcion) != null) {
             return true;
