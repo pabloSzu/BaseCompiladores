@@ -2,9 +2,10 @@ package compiladores.TablaSimbolos;
 
 public class ID {
 
-    private String nombre_token;    //nombre de la variable
-    private String tipo_Dato;       //tipo de dato
-    private Boolean usada;          //es usada - no es usada
+
+    private String nombre_token;
+    private String tipo_Dato;
+    private Boolean usada;
 
     public ID() {}
 
@@ -13,6 +14,8 @@ public class ID {
         this.tipo_Dato = tipo;
         this.usada = false;
     }
+
+   
 
     public String getNombre() {
         return this.nombre_token;

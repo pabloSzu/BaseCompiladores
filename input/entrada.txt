@@ -6,7 +6,8 @@ int main() {
 }
 
 int funcAux(int x, int p) {
-    int a = 3; ;
-    int b;
-    return a;
+    int a = 3;
+    a = x + p;
 }
+
+funcAux(2,6);

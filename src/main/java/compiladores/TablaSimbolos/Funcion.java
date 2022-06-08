@@ -6,6 +6,7 @@ import java.util.LinkedList;
 public class Funcion extends ID {
 
     private LinkedList<ID> parametros;
+
   
     public Funcion() {
         this.parametros = new LinkedList<ID>();
