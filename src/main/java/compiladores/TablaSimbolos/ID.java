@@ -10,12 +10,10 @@ public class ID {
     public ID() {}
 
     public ID(String nombre, String tipo) {
-        this.nombre_token = nombre;
-        this.tipo_Dato = tipo;
-        this.usada = false;
+        this.nombre_token = nombre;  //NOMBRE DE LA VARIABLE
+        this.tipo_Dato = tipo;       //TIPO DE LA VARIABLE
+        this.usada = false;          //USADA (BOOLEANA)
     }
-
-   
 
     public String getNombre() {
         return this.nombre_token;

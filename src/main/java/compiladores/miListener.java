@@ -100,7 +100,6 @@ public class miListener extends compiladoresBaseListener {
     @Override 
     public void exitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx) {
         Funcion funcion = null;
-
         if (ctx.tipo_de_datos() != null)
             funcion = new Funcion(ctx.tipo_de_datos().getText(), ctx.ID().getText());
     

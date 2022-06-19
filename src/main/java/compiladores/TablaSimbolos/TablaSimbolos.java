@@ -15,7 +15,6 @@ public class TablaSimbolos {
     public static TablaSimbolos getInstance() {
         if(instance == null)
             instance = new TablaSimbolos();
-
         return instance;
     }
 
@@ -129,6 +128,25 @@ public class TablaSimbolos {
         else
             return null; 
     }
+
+
+
+
+    public LinkedList<ID> getCurrentContextUnusedVariables() {
+        LinkedList<ID> unused = new LinkedList<ID>();
+        HashMap<String, ID> IDs = this.tablaSimbolos.getLast();
+        for(ID id : IDs.values()) {
+            if (id instanceof Funcion && id.getNombre().equals("main")) { // function main is always used
+                continue;
+            }
+            if (!id.isUsado()) {
+                unused.add(id);
+            }
+        }
+        return unused;
+    }
+
+
 
     public void printTable() {
         int ctx = 1;
