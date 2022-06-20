@@ -20,38 +20,38 @@ public class Funcion extends ID {
         this.setUsado(true);                      //asigno usado = true en la funcion
     }
     
-    public LinkedList<ID> getParametros() {             
+    public LinkedList<ID> getParametros() {             //devuelvo lista de parametros  
         return this.parametros;
     }
 
-    public void setParametros(LinkedList<ID> param) {   
+    public void setParametros(LinkedList<ID> param) {   //seteo lista de parametros
         this.parametros = param;
     }
 
-    public Boolean addParametro(ID param) {            
+    public Boolean addParametro(ID param) {              //agrego un parámetro
         return this.parametros.add(param);
     }
 
-    public Boolean deleteParametro(ID param) {
+    public Boolean deleteParametro(ID param) {           //borro un parámetro
         return this.parametros.remove(param);
     }
 
     @Override
     public String toString() {
-        String funcion = this.getTipo() + " " + this.getNombre() + "(";
-        Iterator<ID> it = this.parametros.iterator();
+        String funcion = this.getTipo() + " " + this.getNombre() + "(";  //devuelvo tipo y nobre de la función
+        Iterator<ID> iterador = this.parametros.iterator();
 
         int i = 0;
-        while(it.hasNext()) {
-            ID next = it.next();
-            if (i != 0) funcion += ", " + next.getTipo() + " " + next.getNombre();
+        while(iterador.hasNext()) {
+            ID next = iterador.next();
+            if (i != 0) funcion += ", " + next.getTipo() + " " + next.getNombre();    //itero y muestro los parámetros
             else funcion += next.getTipo() + " " + next.getNombre();
             i++;
         }
 
         funcion += ")";
 
-        if(this.isUsado()) {
+        if(this.isUsado()) {                      //devulevo si la función fue usada o no fue usada
             funcion += " [funcion usada]";
         }
         else {

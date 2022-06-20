@@ -1,9 +1,12 @@
 package compiladores;
 
-import compiladores.TablaSimbolos.*;
-import compiladores.compiladoresParser.BloqueContext;
-
 import java.util.LinkedList;
+
+import compiladores.compiladoresParser.BloqueContext;
+import compiladores.TablaSimbolos.Funcion;
+import compiladores.TablaSimbolos.ID;
+import compiladores.TablaSimbolos.TablaSimbolos;
+import compiladores.TablaSimbolos.Variable;
 
 
 public class miListener extends compiladoresBaseListener {
