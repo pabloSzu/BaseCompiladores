@@ -8,13 +8,11 @@ import org.antlr.v4.runtime.tree.xpath.XPath;
 
 import compiladores.TablaSimbolos.*;
 
-
 public class DataFuncion {
 
     public static Funcion getDataFuncion( compiladoresParser.Definicion_funcionContext ctx) {
         
         TablaSimbolos tablaSimbolos = TablaSimbolos.getInstance();
-        ErrorListener error = ErrorListener.getInstance();
 
         String tipo;
         if(ctx.tipo_de_datos() != null)
@@ -45,7 +43,7 @@ public class DataFuncion {
             Funcion firmaFuncion = tablaSimbolos.getDefFuncion(funcion);
             
             if (firmaFuncion != null && !funcion.equals(firmaFuncion)) {
-                error.printError(ctx.getStart().getLine(), "Conflicting types for " + funcion.getNombre());
+                ErrorListener.printError(ctx.getStart().getLine(), "Conflicting types for " + funcion.getNombre());
             }
         }
         return funcion;
