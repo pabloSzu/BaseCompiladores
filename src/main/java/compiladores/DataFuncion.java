@@ -45,11 +45,11 @@ public class DataFuncion {
                 ErrorListener.printError(ctx.getStart().getLine(), "Conflicting types for " + funcion.getNombre());
             }
         }
-        System.out.println(tablaSimbolos);
         return funcion;
         
     }
 
+    
 
     public static LinkedList<ID> getParametros(ParserRuleContext ruleCtx, LinkedList<ID> parametros) {
         // System.out.println("DataFuncion.getParametros");
