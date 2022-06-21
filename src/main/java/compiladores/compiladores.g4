@@ -119,6 +119,8 @@ declaracion :  tipo_de_datos asignacion_simple;
 tipo_de_datos : INT 
               | DOUBLE 
               | FLOAT
+              | VOID
+              | CHAR
               ;
 
 /*
@@ -224,8 +226,8 @@ declaracion_funcion : tipo_de_datos ID PA param_declaracion PC;
                     
 definicion_funcion: tipo_de_datos ID PA param_definicion PC bloque;
 
-param_declaracion : tipo_de_datos(ID | )
-		              | tipo_de_datos (ID | ) COMA param_declaracion
+param_declaracion : tipo_de_datos (ID | ) 
+		              | tipo_de_datos (ID |) COMA param_declaracion
                   |
 		              ;
 

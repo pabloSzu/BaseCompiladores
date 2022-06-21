@@ -103,15 +103,25 @@ public class TablaSimbolos {
         return false;
     }
 
-//controlo si está declarada la variable por su nombre
-    public boolean isVariableDeclared(final String nombre) {
-        for(int i = this.tablaSimbolos.size() - 1; i >= 0; i--) {
-            if (this.tablaSimbolos.get(i).containsKey(nombre)) {
-                return true;
+    //controlo si está declarada la variable por su nombre
+        public boolean isVariableDeclared(final String nombre) {
+            for(int i = this.tablaSimbolos.size() - 1; i >= 0; i--) {
+                if (this.tablaSimbolos.get(i).containsKey(nombre)) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
+
+    //controlo si está declarada la variable la funcion
+        public boolean isVariableDeclared(final Funcion funcion) {
+            for(int i = this.tablaSimbolos.size() - 1; i >= 0; i--) {
+                if (this.tablaSimbolos.get(i).containsKey(funcion.getNombre())) {
+                    return true;
+                }
+            }
+            return false;
+        }
 //controlo si son usadas
     public void setUsedId(final String nombre) {
         for (HashMap<String, ID> contexto : this.tablaSimbolos) {
