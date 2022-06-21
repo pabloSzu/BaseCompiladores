@@ -1,11 +1,12 @@
 int u;
+void aasdas;
 int b;
 int a=7;
-int abc(a){
-    a = a + 1;
-    return a;
-}
+void func_1(){};
+int func_2(){ int pi=3321; return};
+
 
 int main() {
-    abc();
-}
+    a=9;
+    return 0;
+};
