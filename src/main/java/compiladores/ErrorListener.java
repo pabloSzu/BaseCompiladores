@@ -10,7 +10,7 @@ public class ErrorListener {
         }
         return instance;
     }
-
+//muestro los errores y la línea de los mismos
     public static void printError(int line, String error) {
         System.out.println("Error en la linea nro: " + line + " " +error);
     }

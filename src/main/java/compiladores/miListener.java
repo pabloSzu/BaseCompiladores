@@ -1,9 +1,12 @@
 package compiladores;
 
-import compiladores.TablaSimbolos.*;
-import compiladores.compiladoresParser.BloqueContext;
-
 import java.util.LinkedList;
+
+import compiladores.compiladoresParser.BloqueContext;
+import compiladores.TablaSimbolos.Funcion;
+import compiladores.TablaSimbolos.ID;
+import compiladores.TablaSimbolos.TablaSimbolos;
+import compiladores.TablaSimbolos.Variable;
 
 
 public class miListener extends compiladoresBaseListener {
@@ -100,7 +103,6 @@ public class miListener extends compiladoresBaseListener {
     @Override 
     public void exitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx) {
         Funcion funcion = null;
-
         if (ctx.tipo_de_datos() != null)
             funcion = new Funcion(ctx.tipo_de_datos().getText(), ctx.ID().getText());
     

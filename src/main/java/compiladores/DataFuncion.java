@@ -8,28 +8,25 @@ import org.antlr.v4.runtime.tree.xpath.XPath;
 
 import compiladores.TablaSimbolos.*;
 
-
 public class DataFuncion {
+
 
     public static Funcion getDataFuncion( compiladoresParser.Definicion_funcionContext ctx) {
         
         TablaSimbolos tablaSimbolos = TablaSimbolos.getInstance();
-        ErrorListener error = ErrorListener.getInstance();
 
         String tipo;
-        if(ctx.tipo_de_datos() != null)
-            tipo = ctx.tipo_de_datos().getText();
-        else
-            tipo = ctx.tipo_de_datos().getText();
+        
+        tipo = ctx.tipo_de_datos().getText();  //tipo = tipo de dato
+        String nombre = ctx.ID().getText();    //nombre = nombre de variable
+        Funcion funcion = new Funcion(tipo, nombre);   //funcion = FUNCION (con tipo y nombre)
 
-            
-        String nombre = ctx.ID().getText();
-        Funcion funcion = new Funcion(tipo, nombre);
-
-        LinkedList<ID> parametros = new LinkedList<>();
+        LinkedList<ID> parametros = new LinkedList<>();       //parametros = lista de parámetros
 
         //verificar si tiene parametros declarados
         if (ctx.param_definicion().getChildCount() != 0) {
+
+            
             tablaSimbolos.addParamForContext();
             parametros = getParametros(ctx.param_definicion(), parametros);
 
@@ -45,19 +42,20 @@ public class DataFuncion {
             Funcion firmaFuncion = tablaSimbolos.getDefFuncion(funcion);
             
             if (firmaFuncion != null && !funcion.equals(firmaFuncion)) {
-                error.printError(ctx.getStart().getLine(), "Conflicting types for " + funcion.getNombre());
+                ErrorListener.printError(ctx.getStart().getLine(), "Conflicting types for " + funcion.getNombre());
             }
         }
         return funcion;
+        
     }
 
+    
 
     public static LinkedList<ID> getParametros(ParserRuleContext ruleCtx, LinkedList<ID> parametros) {
-        //si es una definicion de una funcion
+        // System.out.println("DataFuncion.getParametros");
         if(ruleCtx.getClass().equals( compiladoresParser.Una_o_mas_variablesContext.class)) {
              compiladoresParser.Una_o_mas_variablesContext paramDefCtx = ( compiladoresParser.Una_o_mas_variablesContext) ruleCtx;
             
-            // si hay al menos 2 parametros en la funcion definida
             if (paramDefCtx.una_o_mas_variables() != null) {
                 ID param = new Variable(paramDefCtx.una_o_mas_variables().declaracion().asignacion_simple().ID().getText(), paramDefCtx.una_o_mas_variables().declaracion().tipo_de_datos().getText());
                 parametros.add(param);
